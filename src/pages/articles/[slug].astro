@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro'; import Ad from '../../components/Ad.astro'; import Cards from '../../components/Cards.astro'; import { getCollection } from 'astro:content'; import { catName, SITE } from '../../config';
+export async function getStaticPaths(){const all=await getCollection('articles');return all.map(e=>({params:{slug:e.slug},props:{e,all}}))}
+const {e,all}=Astro.props; const d=e.data; const {Content,headings}=await e.render();
+const url=new URL(`/articles/${e.slug}/`,Astro.site).href; const site=Astro.site!.href.replace(/\/$/,'');
+const rel=all.filter((a:any)=>a.slug!==e.slug&&(d.related.includes(a.slug)||a.data.category===d.category)).slice(0,3);
+const toc=headings.filter((h:any)=>h.depth<=3);
+const ld=[{'@context':'https://schema.org','@type':'Article',headline:d.title,description:d.description,datePublished:d.pubDate.toISOString(),dateModified:(d.updateDate??d.pubDate).toISOString(),image:site+d.image,mainEntityOfPage:url,author:{'@type':'Organization',name:'PACHI DATA 編集部'},publisher:{'@type':'Organization',name:SITE.name,logo:{'@type':'ImageObject',url:site+'/logo.svg'}}},
+{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[['ホーム',site+'/'],[catName(d.category),`${site}/category/${d.category}/`],[d.title,url]].map((x,i)=>({'@type':'ListItem',position:i+1,name:x[0],item:x[1]}))}];
+---
+<Base title={d.seoTitle??d.title} description={d.description} canonical={d.canonical} noindex={d.noindex} image={d.image} ld={ld} type="article">
+<div class="w" style="max-width:780px"><p class="crumb"><a href="/">ホーム</a> › <a href={`/category/${d.category}/`}>{catName(d.category)}</a> › {d.title}</p>
+<article class="art"><h1>{d.title}</h1><p class="meta">公開日 {d.pubDate.toISOString().slice(0,10)}{d.updateDate&&` ／ 更新日 ${d.updateDate.toISOString().slice(0,10)}`} ／ <span class="tag">{catName(d.category)}</span></p>
+<img src={d.image} alt={d.title} width="780" height="410" style="width:100%;height:auto"><Ad slot="top"/>
+{toc.length>0&&<nav class="toc" aria-label="目次"><b>目次</b><ul>{toc.map((h:any)=><li style={h.depth===3?'margin-left:1em':''}><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul></nav>}
+<Content/><Ad slot="middle"/>
+<div class="note">※本記事は情報提供を目的としており、勝利や利益を保証するものではありません。機種ごとの数値は必ず公式情報でご確認ください。</div><Ad slot="bottom"/>
+<p class="meta">執筆：PACHI DATA 編集部（個人名やプロフィールは<a href="/about/">運営者情報</a>に追記できます）</p>
+<p>共有：<a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(d.title)}`} rel="noopener" target="_blank">X</a> ／ <a href={`https://line.me/R/msg/text/?${encodeURIComponent(d.title+' '+url)}`} rel="noopener" target="_blank">LINE</a></p></article>
+<h2 class="s">関連記事</h2><Cards items={rel}/></div></Base>

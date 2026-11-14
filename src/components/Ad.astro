@@ -1,0 +1,4 @@
+---
+import { ADS } from '../config'; const { slot } = Astro.props;
+---
+{ADS[slot as keyof typeof ADS] && <div class="ad" set:html={ADS[slot as keyof typeof ADS]} />}

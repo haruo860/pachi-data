@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro'; import Cards from '../components/Cards.astro'; import { getCollection } from 'astro:content'; import { SITE, CATS } from '../config';
+const all=(await getCollection('articles')).sort((a,b)=>+b.data.pubDate-+a.data.pubDate);
+const popular=['what-is-pachinko','border-line','spin-rate']; // 人気記事: slugを手動指定（将来アクセス解析と連動可）
+---
+<Base>
+<section class="hero"><div class="w"><h1>PACHI DATA</h1><p style="font-size:20px;margin:6px 0">{SITE.tagline}</p><p class="meta">{SITE.desc}</p><input id="q" type="search" placeholder="記事を検索（例：ボーダー）" aria-label="記事検索"></div></section>
+<div class="w"><h2 class="s">最新記事</h2><div id="list"><Cards items={all.slice(0,12)} /></div>
+<h2 class="s">人気記事</h2><Cards items={all.filter(a=>popular.includes(a.slug))} />
+<h2 class="s">カテゴリー</h2><div class="grid">{CATS.map(c=><a class="card" href={`/category/${c.slug}/`}>{c.name}</a>)}</div>
+<h2 class="s">おすすめ記事</h2><Cards items={all.filter(a=>a.data.category==='beginner').slice(0,3)} />
+<h2 class="s">無料計算ツール</h2><a class="card" href="/tools/">大当たり確率・ハマり確率・継続率・回転率・収支の5種類を無料で使えます →</a></div>
+<script is:inline>document.getElementById('q').addEventListener('input',e=>{const v=e.target.value.toLowerCase();document.querySelectorAll('#list .card').forEach(c=>c.style.display=c.dataset.t.toLowerCase().includes(v)?'':'none')})</script>
+</Base>

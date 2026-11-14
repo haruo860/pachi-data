@@ -1,0 +1,4 @@
+---
+import { catName } from '../config'; const { items } = Astro.props;
+---
+<div class="grid">{items.map((a:any)=><a class="card" href={`/articles/${a.slug}/`} data-t={a.data.title}><img src={a.data.image} alt={a.data.title} loading="lazy" width="400" height="210"><span class="tag">{catName(a.data.category)}</span><h3 style="margin:6px 0;font-size:16px">{a.data.title}</h3><span class="meta">{a.data.pubDate.toISOString().slice(0,10)}</span></a>)}</div>

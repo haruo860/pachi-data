@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="無料計算ツール（確率・回転率・収支）" description="大当たり確率・ハマり確率・継続率・回転率・収支を入力するだけで自動計算できる無料ツール集。">
+<div class="w" style="max-width:780px"><h1>無料計算ツール</h1><p class="meta">入力すると自動で計算されます。結果は理論値で、実際の結果を保証するものではありません。</p>
+<section class="calc" id="t1"><h2>① 大当たり確率計算機</h2><label>大当たり確率 1/<input type="number" name="p" value="319" min="1"></label><label>回転数<input type="number" name="n" value="319" min="0"></label><p>n回転で1回以上当たる確率：<span class="res" data-o></span></p></section>
+<section class="calc" id="t2"><h2>② ハマり確率計算機</h2><label>大当たり確率 1/<input type="number" name="p" value="319" min="1"></label><label>回転数<input type="number" name="n" value="1000" min="0"></label><p>n回転以上ハマる確率：<span class="res" data-o></span></p></section>
+<section class="calc" id="t3"><h2>③ 継続率計算機</h2><label>継続率(%)<input type="number" name="r" value="80" min="0" max="99.9" step="0.1"></label><label>連チャン回数（初回含む）<input type="number" name="k" value="5" min="1"></label><p>k回以上続く確率：<span class="res" data-o></span></p><p>平均連チャン回数：<span class="res" data-o2></span></p></section>
+<section class="calc" id="t4"><h2>④ 回転率計算機</h2><label>投資金額（円）<input type="number" name="m" value="3000" min="0"></label><label>回転数<input type="number" name="n" value="60" min="0"></label><label>使用玉数（参考）<input type="number" name="b" value="750" min="0"></label><p>1000円あたりの回転数：<span class="res" data-o></span></p></section>
+<section class="calc" id="t5"><h2>⑤ 収支計算機</h2><label>投資金額（円）<input type="number" name="i" value="20000" min="0"></label><label>回収金額（円）<input type="number" name="c" value="15000" min="0"></label><p>収支差額：<span class="res" data-o></span></p><p>回収率：<span class="res" data-o2></span></p></section></div>
+<script is:inline>
+const $=(id,n)=>+document.querySelector('#'+id+' [name='+n+']').value;const pc=x=>(x*100).toFixed(2)+'%';
+const F={t1:(o)=>{const p=$('t1','p'),n=$('t1','n');o[0].textContent=p>=1?pc(1-Math.pow(1-1/p,n)):'-'},
+t2:(o)=>{const p=$('t2','p'),n=$('t2','n');o[0].textContent=p>=1?pc(Math.pow(1-1/p,n)):'-'},
+t3:(o)=>{const r=$('t3','r')/100,k=$('t3','k');o[0].textContent=k>=1?pc(Math.pow(r,k-1)):'-';o[1].textContent=r<1?(1/(1-r)).toFixed(2)+'回':'-'},
+t4:(o)=>{const m=$('t4','m'),n=$('t4','n');o[0].textContent=m>0?(n/(m/1000)).toFixed(2)+'回':'-'},
+t5:(o)=>{const i=$('t5','i'),c=$('t5','c');o[0].textContent=(c-i).toLocaleString()+'円';o[1].textContent=i>0?(c/i*100).toFixed(1)+'%':'-'}};
+Object.keys(F).forEach(id=>{const s=document.getElementById(id),o=s.querySelectorAll('.res'),run=()=>F[id](o);s.addEventListener('input',run);run()});
+</script></Base>

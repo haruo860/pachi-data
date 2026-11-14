@@ -1,0 +1,6 @@
+---
+import Base from '../../layouts/Base.astro'; import Cards from '../../components/Cards.astro'; import { getCollection } from 'astro:content'; import { CATS } from '../../config';
+export function getStaticPaths(){return CATS.map(c=>({params:{cat:c.slug},props:{c}}))}
+const {c}=Astro.props; const items=(await getCollection('articles')).filter(a=>a.data.category===c.slug).sort((a,b)=>+b.data.pubDate-+a.data.pubDate);
+---
+<Base title={`${c.name}の記事一覧`} description={`PACHI DATAの「${c.name}」カテゴリーの記事一覧です。`}><div class="w"><h1>{c.name}</h1>{items.length?<Cards items={items}/>:<p>記事は準備中です。</p>}</div></Base>
