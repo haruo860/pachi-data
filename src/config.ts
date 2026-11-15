@@ -1,4 +1,4 @@
-export const SITE = { name:'PACHI DATA', tagline:'パチンコの情報を、もっと分かりやすく。', desc:'パチンコの新台情報・確率・ボーダー・収支管理を分かりやすく解説する情報メディア。', ga4:'' /* 例: G-XXXXXXX */ };
+export const SITE = { name:'PACHI DATA', tagline:'パチンコの情報を、もっと分かりやすく。', desc:'パチンコの新台情報・確率・ボーダー・収支管理を分かりやすく解説する情報メディア。', ga4:'G-860MC0K0H2s' /* 例: G-XXXXXXX */ };
 // 広告枠: 空欄のままなら何も表示されません。審査通過後にHTMLを貼ってください。
 export const ADS = { top:'', middle:'', bottom:'', sidebar:'' };
 export const CATS = [
