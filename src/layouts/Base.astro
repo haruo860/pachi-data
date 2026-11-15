@@ -10,6 +10,7 @@ const all = (Astro.url.pathname==='/'?base:[]).concat(ld);
 ---
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{full}</title><meta name="description" content={description}><link rel="canonical" href={url}>
+<meta name="google-site-verification" content="dUf9v3khAIcS9OZHNkrrHgq_aAvin3aqD3MqndXCsLs" />
 {noindex && <meta name="robots" content="noindex,follow">}
 <meta property="og:type" content={type}><meta property="og:title" content={full}><meta property="og:description" content={description}><meta property="og:url" content={url}><meta property="og:image" content={img}><meta property="og:site_name" content={SITE.name}><meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content={full}><meta name="twitter:description" content={description}><meta name="twitter:image" content={img}>
