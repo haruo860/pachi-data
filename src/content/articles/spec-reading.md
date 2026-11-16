@@ -4,7 +4,7 @@ description: "パチンコのスペック表で最初に確認したい項目を
 mainKeyword: "パチンコ スペック 見方"
 category: beginner
 pubDate: 2026-11-17
-image: /images/69deb8a9-321e-49e6-905a-3a9c0e619ca9.jpg
+image: /images/8b509628-470b-41dd-8666-db518a49cbe7.jpg
 related: [probability-319, border-line]
 ---
 
