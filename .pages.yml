@@ -1,0 +1,45 @@
+media:
+  input: public/images
+  output: /images
+content:
+  - name: articles
+    label: 記事
+    type: collection
+    path: src/content/articles
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: タイトル
+        type: string
+      - name: seoTitle
+        label: 検索用タイトル（短め）
+        type: string
+      - name: description
+        label: 説明文
+        type: text
+      - name: mainKeyword
+        label: メインキーワード
+        type: string
+      - name: category
+        label: カテゴリー
+        type: select
+        options:
+          values: [shindai, kouryaku, data, beginner, border, shop, news, money]
+      - name: pubDate
+        label: 公開日
+        type: date
+      - name: image
+        label: 画像
+        type: image
+      - name: related
+        label: 関連記事（ファイル名）
+        type: string
+        list: true
+      - name: noindex
+        label: 検索に出さない
+        type: boolean
+      - name: body
+        label: 本文
+        type: code
+        options:
+          language: markdown
